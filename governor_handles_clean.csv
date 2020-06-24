@@ -1,54 +1,54 @@
-gender,handle,state,party
-F,GovernorKayIvey,Alabama,R
-M,GovDunleavy,Alaska,R
-M,dougducey,Arizona,R
-M,AsaHutchinson,Arkansas,R
-M,GavinNewsom,California,D
-M,GovofCO,Colorado,D
-M,GovNedLamont,Connecticut,D
-F,MayorBowser,DC,D
-M,JohnCarneyDE,Delaware,D
-M,GovRonDeSantis,Florida,R
-M,BrianKempGA,Georgia,R
-M,GovHawaii,Hawaii,D
-M,GovernorLittle,Idaho,R
-M,GovPritzker,Illinois,D
-M,GovHolcomb,Indiana,R
-F,KimReynoldsIA,Iowa,R
-F,GovLauraKelly,Kansas,D
-M,GovAndyBeshear,Kentucky,D
-M,LouisianaGov,Louisiana,D
-F,GovJanetMills,Maine,D
-M,LarryHogan,Maryland,R
-M,MassGovernor,Massachussetts,R
-F,GovWhitmer,Michigan,D
-M,GovTimWalz,Minnesota,D
-M,tatereeves,Mississippi,R
-M,GovParsonMO,Missouri,R
-M,GovernorBullock,Montana,D
-M,GovRicketts,Nebraska,R
-M,SteveSisolak,Nevada,D
-M,GovChrisSununu,New Hampshire,R
-M,GovMurphy,New Jersey,D
-F,GovMLG,New Mexico,D
-M,NYGovCuomo,New York,D
-M,NC_Governor,North Carolina,D
-M,DougBurgum,North Dakota,R
-M,GovMikeDeWine,Ohio,R
-M,GovStitt,Oklahoma,R
-F,OregonGovBrown,Oregon,D
-M,GovernorTomWolf,Pennsylvania,D
-F,wandavazquezg,Puerto,NPP
-F,GinaRaimondo,Rhode,D
-M,henrymcmaster,South Carolina,R
-F,govkristinoem,South Dakota,R
-M,GovBillLee,Tennessee,R
-M,GregAbbott_TX,Texas,R
-M,GovHerbert,Utah,R
-M,GovPhilScott,Vermont,R
-M,GovernorVA,Virginia,D
-M,GovInslee,Washington,D
-M,WVGovernor,West Virginia,R
-M,GovEvers,Wisconsin,D
-M,GovernorGordon,Wyoming,R
-F,louleonguerrero,Guam,D
+gender,handle,state,party,name
+F,GovernorKayIvey,Alabama,R,Kay Ivey
+M,GovDunleavy,Alaska,R,Mike Dunleavy
+M,dougducey,Arizona,R,Doug Ducey
+M,AsaHutchinson,Arkansas,R,Asa Hutchinson
+M,GavinNewsom,California,D,Gavin Newsom
+M,GovofCO,Colorado,D,Jared Polis
+M,GovNedLamont,Connecticut,D,Ned Lamont
+F,MayorBowser,DC,D,Muriel Bowser
+M,JohnCarneyDE,Delaware,D,John Carney
+M,GovRonDeSantis,Florida,R,Ron DeSantis
+M,BrianKempGA,Georgia,R,Brian Kemp
+M,GovHawaii,Hawaii,D,David Ige
+M,GovernorLittle,Idaho,R,Brad Little
+M,GovPritzker,Illinois,D,J.B. Pritzker
+M,GovHolcomb,Indiana,R,Eric Holcomb
+F,KimReynoldsIA,Iowa,R,Kim Reynolds
+F,GovLauraKelly,Kansas,D,Laura Kelly
+M,GovAndyBeshear,Kentucky,D,Andy Beshear
+M,LouisianaGov,Louisiana,D,John Bel Edwards
+F,GovJanetMills,Maine,D,Janet Mills
+M,LarryHogan,Maryland,R,Larry Hogan
+M,MassGovernor,Massachussetts,R,Charlie Baker
+F,GovWhitmer,Michigan,D,Gretchen Whitmer
+M,GovTimWalz,Minnesota,D,Tim Walz
+M,tatereeves,Mississippi,R,Tate Reeves
+M,GovParsonMO,Missouri,R,Mike Parson
+M,GovernorBullock,Montana,D,Steve Bullock
+M,GovRicketts,Nebraska,R,Pete Ricketts
+M,SteveSisolak,Nevada,D,Steve Sisolak
+M,GovChrisSununu,New Hampshire,R,Chris Sununu
+M,GovMurphy,New Jersey,D,Phil Murphy
+F,GovMLG,New Mexico,D,Michelle Lujan Grisham
+M,NYGovCuomo,New York,D,Andrew Cuomo
+M,NC_Governor,North Carolina,D,Roy Cooper
+M,DougBurgum,North Dakota,R,Doug Burgum
+M,GovMikeDeWine,Ohio,R,Mike DeWine
+M,GovStitt,Oklahoma,R,Kevin Stitt
+F,OregonGovBrown,Oregon,D,Kate Brown
+M,GovernorTomWolf,Pennsylvania,D,Tom Wolf
+F,wandavazquezg,Puerto,NPP,Rico Wanda Vazquez Garced
+F,GinaRaimondo,Rhode,D,Island Gina Raimondo
+M,henrymcmaster,South Carolina,R,Henry McMaster
+F,govkristinoem,South Dakota,R,Kristi Noem
+M,GovBillLee,Tennessee,R,Bill Lee
+M,GregAbbott_TX,Texas,R,Greg Abbott
+M,GovHerbert,Utah,R,Gary Herbert
+M,GovPhilScott,Vermont,R,Phil Scott
+M,GovernorVA,Virginia,D,Ralph Northam
+M,GovInslee,Washington,D,Jay Inslee
+M,WVGovernor,West Virginia,R,Jim Justice
+M,GovEvers,Wisconsin,D,Tony Evers
+M,GovernorGordon,Wyoming,R,Mark Gordon
+F,louleonguerrero,Guam,D,Lou Leon Guerrero

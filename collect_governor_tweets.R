@@ -11,7 +11,8 @@ govhandles <- read_csv("governor_handles.csv") %>%
          state = ifelse(state %in% c("North","South","West","New"),str_extract(raw,"(North|South|West|New) ([A-z]*) ") %>% str_trim,state),
          party = case_when(str_detect(raw," R @") ~ "R",
                            str_detect(raw," D @") ~ "D",
-                           str_detect(raw," NPP @") ~ "NPP")) %>% 
+                           str_detect(raw," NPP @") ~ "NPP"),
+         name = str_remove_all(raw,str_c(c(handle,state,"@",str_c(" ",party," "),"\\(mayor\\)"),collapse = "|")) %>% str_trim()) %>% 
   filter(!is.na(raw))
 
 govhandles %>% select(-raw) %>% write_csv("governor_handles_clean.csv")
@@ -33,16 +34,6 @@ govTweets %>%
   arrange(first_date)
 
 
-### Add gender and party to tweets data
-
-govTweets <- left_join(govTweets,govhandles %>% select(screen_name = handle,party,gender))
-
-### create fixed effect markets
-govTweets <- govTweets %>% 
-  mutate(covidTweet = str_detect(text %>% str_to_lower(),"covid|corona|virus|pandemic|stayathome|distancing"),
-         month = months(created_at),
-         week.day = weekdays(created_at),
-         date = as.Date(created_at))
 
 #lme4::lmer(retweet_count ~ (1|screen_name) + covidTweet+gender + followers_count,data = govTweets %>% filter(created_at > "1/1/2020")) %>% summary
 rt_nGovFE <- lm(retweet_count ~ followers_count + covidTweet*gender + factor(date),data = govTweets %>% filter(created_at > "2020-02-01")) 

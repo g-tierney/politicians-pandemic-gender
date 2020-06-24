@@ -41,3 +41,4 @@ vignettes/*.pdf
 
 #large data files
 govTweets.csv
+.Rproj.user
