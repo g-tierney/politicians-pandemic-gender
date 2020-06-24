@@ -1,0 +1,118 @@
+---
+title: "Preliminary Data Review"
+author: "Graham Tierney"
+date: "6/24/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+
+```
+
+## R Markdown
+
+```{r load_data,include=F}
+govHandles <- read_csv("governor_handles_clean.csv")
+govTweets <- rtweet::read_twitter_csv("govTweets.csv")
+
+
+### create tweet-level variables
+govTweets <- govTweets %>% 
+  left_join(govHandles %>% select(screen_name = handle,party,gender,state)) %>%  # add governor features
+  mutate(covidTweet = str_detect(text %>% str_to_lower(),"covid|corona|virus|pandemic|stayathome|distancing"), # add covid tweets
+         date = as.Date(created_at))
+```
+
+
+## Summary Statistics
+
+We focus on the period from Feburary 1st to June 20th. The states with female governors as of these dates are: Alabama (R), Iowa (R), Kansas (D), Maine (D), Michigan (D), New Mexico (D), Oregon (D), Rhode Island (D), and South Dakota (R). We also include the mayor of DC (D), and the governors of Guam (D) and Puerto Rico (NPP). In total, we have 12 female officials. 
+
+```{r governor_summaries}
+
+govTweets %>% 
+  group_by(gender,state) %>% 
+  summarise(`N Non-Covid Tweets` = sum(!covidTweet),
+            `N Covid Tweets` = sum(covidTweet),
+            `N Twitter Followers` = mean(followers_count),
+            `Mean RTs of Covid Tweets` = mean(retweet_count[covidTweet]),
+            `Mean RTs of Non-Covid Tweets` = mean(retweet_count[!covidTweet])) %>% 
+  left_join(govHandles %>% mutate(Republican = party == "R"),by = c("gender", "state")) %>% 
+  table1::table1(~`N Non-Covid Tweets` + `N Covid Tweets` + `N Twitter Followers` + Republican + 
+                   `Mean RTs of Covid Tweets` + `Mean RTs of Non-Covid Tweets`|gender,data=.)
+  
+  
+
+```
+
+## Temporal Trends
+
+Next, we show some plots of the number of tweets and engagement with tweets over time. We observe almost no covid-related tweets in February, with a sharp rise in March and gradual decline. 
+
+```{r tweetsByDay}
+
+scale_factor <-300/4000
+govTweets %>% 
+  mutate(covidTweet = ifelse(covidTweet,"Covid","Non-Covid")) %>% 
+  group_by(gender,date,covidTweet) %>% 
+  filter(date >= "2020-02-01") %>% 
+  summarise(n = n(),
+            rts = mean(retweet_count),
+            fvs = mean(favorite_count),
+            eng = mean(retweet_count + favorite_count)) %>% 
+  ggplot(aes(x=date,color = gender)) + 
+  #geom_col(aes(y=rts*scale_factor,fill=gender),alpha = .01) + 
+  geom_line(aes(y=n)) + 
+  facet_wrap(~covidTweet,scales = "free_y") + 
+  scale_color_brewer(palette = "Set1")  + 
+  #scale_y_continuous(sec.axis = sec_axis(~./scale_factor))
+  ggtitle("Tweets by Day and Governor Gender") + 
+  ylab("Number of Tweets") 
+
+govTweets %>% 
+  mutate(covidTweet = ifelse(covidTweet,"Covid","Non-Covid")) %>% 
+  group_by(gender,date,covidTweet) %>% 
+  filter(date >= "2020-02-01") %>% 
+  summarise(n = n(),
+            rts = mean(retweet_count),
+            fvs = mean(favorite_count),
+            eng = mean(retweet_count + favorite_count)) %>% 
+  ggplot(aes(x=date,color = gender)) + 
+  #geom_col(aes(y=rts*scale_factor,fill=gender),alpha = .01) + 
+  geom_line(aes(y=rts)) + 
+  facet_wrap(~covidTweet,scales = "free_y") + 
+  scale_color_brewer(palette = "Set1") + 
+  scale_y_continuous(trans = "log10") + 
+  ggtitle("Retweets by Day and Governor Gender") + 
+  ylab("Mean Retweets") 
+
+```
+
+### Analysis
+
+For analysis, we run regressions at the tweet-level. The outcome is either number of retweets or favorites. We take the log of the outcome because of the substantial right-skew. 
+
+```{r regressions,results='asis'}
+reg_data <- govTweets %>% 
+  filter(created_at >= "2020-02-01") %>% 
+  mutate(followers_count = (followers_count-mean(followers_count))/sd(followers_count),
+         friends_count = (friends_count-mean(friends_count))/sd(friends_count))
+
+
+rt_nGovFE <- lm(log(retweet_count+1) ~ covidTweet*gender + followers_count + factor(date),data = reg_data) 
+rt_yGovFE <- lm(log(retweet_count+1) ~ screen_name + covidTweet*gender + factor(date),data = reg_data) 
+
+fv_nGovFE <- lm(log(favorite_count+1) ~ covidTweet*gender + followers_count + factor(date),data = reg_data) 
+fv_yGovFE <- lm(log(favorite_count+1) ~ screen_name + factor(date) + covidTweet*gender ,data = reg_data)
+
+
+stargazer::stargazer(rt_nGovFE,rt_yGovFE,fv_nGovFE,fv_yGovFE,
+                     type = "text",omit = "screen_name|date",omit.stat = "F",
+                     dep.var.labels = c("Retweet Count","Favorite Count"),
+                     add.lines = c("Governor Fixed Effects & N & Y & N & Y",
+                                   "Day Fixed Effects & Y & Y & Y & Y"))
+```
