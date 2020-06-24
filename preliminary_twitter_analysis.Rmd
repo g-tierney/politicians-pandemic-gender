@@ -94,7 +94,7 @@ govTweets %>%
 
 ### Analysis
 
-For analysis, we run regressions at the tweet-level. The outcome is either number of retweets or favorites. We take the log of the outcome because of the substantial right-skew. 
+For analysis, we run regressions at the tweet-level. The outcome is either number of retweets or favorites. We take the log of the outcome because of the substantial right-skew. In even columns, we include indicator variables for each governor. This prevents us from looking directly at gender or other state-level characteristics because it is co-linear with the indicators. A large part of the individual-level effect, however, is encoded in the follower counts of each governor, measured at the end of the period. In odd columns, we drop the indicators and include follwer count (standardized to mean zero, variance one) to look at gender specifically. 
 
 ```{r regressions,results='asis'}
 reg_data <- govTweets %>% 
@@ -116,3 +116,6 @@ stargazer::stargazer(rt_nGovFE,rt_yGovFE,fv_nGovFE,fv_yGovFE,
                      add.lines = c("Governor Fixed Effects & N & Y & N & Y",
                                    "Day Fixed Effects & Y & Y & Y & Y"))
 ```
+
+Somewhat puzzling are oposite effects for retweets and favorites. Men are favorited more and retweeted less. 
+
