@@ -11,9 +11,10 @@ govhandles <- read_csv("governor_handles.csv") %>%
          state = ifelse(state %in% c("North","South","West","New"),str_extract(raw,"(North|South|West|New) ([A-z]*) ") %>% str_trim,state),
          party = case_when(str_detect(raw," R @") ~ "R",
                            str_detect(raw," D @") ~ "D",
-                           str_detect(raw," NPP @") ~ "NPP"))
+                           str_detect(raw," NPP @") ~ "NPP")) %>% 
+  filter(!is.na(raw))
 
-govhandles
+govhandles %>% select(-raw) %>% write_csv("governor_handles_clean.csv")
 
 
 ### collect tweets ###
